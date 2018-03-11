@@ -1,7 +1,6 @@
 var matrix = [];
-var m = 30;
-var n = 40;
-var a = 0;
+var m = 40;
+var n = 50;
 
 for (var i = 0; i < m; i++) {
     matrix.push([]);
@@ -9,27 +8,28 @@ for (var i = 0; i < m; i++) {
 
 for (var a = 0; a < n; a++) {
     for (var x = 0; x < m; x++) {
-        matrix[x].push(Math.round(Math.random() * 4));
+        matrix[x].push(Math.round(Math.random() * 5));
     }
 }
 var grassArr = [];
-var side = 25;
+var side = 20;
 var xotaker = [];
 var monster = [];
 var lion = [];
+var gigant = []
 
 function setup() {
-    frameRate(5);
+    frameRate(10);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background("grey");
 
     for (var y = 0; y < matrix.length; ++y) {
         for (var x = 0; x < matrix[y].length; ++x) {
             if (matrix[y][x] == 1) {
-                grassArr.push(new Grass(x, y));
+                grassArr.push(new Grass(x, y, 1));
             }
             else if (matrix[y][x] == 2) {
-                xotaker.push(new Xotaker(x, y));
+                xotaker.push(new Xotaker(x, y, 2));
             }
             else if (matrix[y][x] == 3) {
                 monster.push(new Monster(x, y));
@@ -37,9 +37,11 @@ function setup() {
             else if (matrix[y][x] == 4) {
                 lion.push(new Lion(x, y));
             }
+            else if (matrix[y][x] == 5) {
+                gigant.push(new Gigant(x, y))
+            }
         }
     }
-
 }
 function draw() {
 
@@ -63,6 +65,10 @@ function draw() {
             }
             else if (matrix[y][x] == 4) {
                 fill("black");
+                rect(x * side, y * side, side, side);
+            }
+            else if (matrix[y][x] == 5) {
+                fill("red")
                 rect(x * side, y * side, side, side);
             }
         }
@@ -122,4 +128,22 @@ function draw() {
             }
         }
     }
-}
+    for (var i in lion) {
+        lion[i].mahanal()
+    }
+    for (var i in gigant) {
+        gigant[i].sharjvel();
+    }
+
+    for (var i in gigant) {
+        gigant[i].utel();
+        for (var c in lion) {
+            if (lion[c].x == gigant[i].x && lion[c].y == gigant[i].y) {
+                lion.splice(c, 1);
+            }
+        }
+    }
+    for (var i in gigant) {
+        gigant[i].bazmanal();
+    }
+} 
